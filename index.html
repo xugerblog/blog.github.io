@@ -1,0 +1,334 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>[title]-XuGer-个人博客</title>
+    <meta name="keywords" content="许博宇-个人博客,个人博客模板,博客模板" />
+    <meta name="description" content="只有不断努力,才能跟上优秀男人的脚步。" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+    <link href="css/main.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript">
+        var CR_IMG_URL = "{$smarty.const.__LISTC__}";
+        $(function(){
+            $(window).scroll(function(){
+                var $scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;//兼容浏览器
+                if ($scrollTop >150) {$('.returntop>span').addClass('roll');}
+                else{$('.returntop>span').removeClass('roll');}
+            });
+            $(".returntop>span").click(function(){
+                $('body,html').animate({scrollTop:0},500);
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+
+<!--导航条开始-->
+<header class="header">
+    <div class="head">
+        <h1 class="nav_logo"></h1>
+        <span></span>
+        <ul class="menu_nav">
+
+            <li class="menu_li" ><a href="{:U('/index')}">首页</a><div class="hover_bg"></div></li>
+            <foreach name="aid" item="ad">
+            <li class="menu_li" ><a href="{:U('/artical/'.$ad[xg_t_id])}">{$ad.xg_t_type}</a><div class="hover_bg"></div></li>
+           </foreach>
+            <li class="menu_li" ><a href="{:U('/message')}">留言板</a><div class="hover_bg"></div></li>
+           
+            <li class="menu_li" id="menu_login"><div class="menu_login"><a>登录</a></div><div class="hover_bg"></div></li>
+
+            <li class="menu_li" id="user_center"><div class="user_center"><a href="#">{$usercenter}</a></div><div class="hover_bg"></div></li>
+
+        </ul>
+        
+    </div>
+
+<!-- 个人中心 -->
+<div class="cd-user-modal" id="usercenter"> 
+        <div class="cd-user-modal-container">
+            <ul class="cd-switcher">
+                <li class="cd_title"><a>个人中心</a><p>X</p></li>
+            </ul>
+            <div id="cd-login" class="cd_message"> 
+                <div class="cd-form" method="post">
+                    <p class="form_item form_tx">
+                        <img src="{$umessage['xg_u_img']}" alt="">
+                        <a href="#" class="file">更换头像</a><br>
+                        <span>用户名：{$umessage.xg_u_name}　</span>
+                        <span>邮箱：{$umessage.xg_u_email}　</span>
+                        <span>手机：{$umessage.xg_u_tel}</span>
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="userpwd" class="full-width has-padding has-border" type="password" placeholder="新密码　6-22位数字、字母、字符" minlength="6" maxlength="22" id="m_userpwd">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="fuserpwd" class="full-width has-padding has-border" type="password" placeholder="确认密码" minlength="6" maxlength="22" id="m_userpwd1">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="usertel" class="full-width has-padding has-border" type="text" placeholder="请输入您的手机号" minlength="11" maxlength="11" id="m_tel">
+                    </p>
+                    <p class="form_item">
+                        <input class="sumit_menu" type="submit" value="提交修改" id="sumit_modify">
+                    </p>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="cd-user-modal loginregist"> 
+        <div class="cd-user-modal-container">
+            <ul class="cd-switcher" id="cd-switcher">
+                <li><a href="#0">用户登录</a></li>
+                <li><a href="#0">注册新用户</a></li>
+            </ul>
+<!-- 登录表单 -->
+            <div id="cd-login" class="cd-login"> 
+                <div class="cd-form" method="post">
+                    <p class="form_item">
+                        <label class="backimg fuser"></label>
+                        <input required name="username" class="full-width has-padding has-border" type="text" placeholder="请输入用户名" id="l_username" minlength="3" maxlength="11">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="userpwd" class="full-width has-padding has-border" type="password"  placeholder="请输入密码" id="l_userpwd" minlength="6" maxlength="22">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="userverify" class="verify-width has-padding has-border" type="text"  placeholder="输入验证码" id="l_verify" maxlength="5"><img src="{:U('Public/verify')}" alt="验证码" title="点击刷新" onClick="this.src=this.src+'?'+Math.random()">
+                    </p>
+                    <p class="form_item">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me">记住登录状态</label>
+                    </p>
+                    <p class="form_item">
+                        <input class="sumit_menu" type="submit" value="登 录" id="sumit_login">
+                    </p>
+                </div>
+            </div>
+<!-- 注册表单 -->
+            <div id="cd-signup" class="cd-sign"> 
+                <div class="cd-form" method="post">
+                    <p class="form_item">
+                        <label class="backimg fuser"></label>
+                        <input required name="username" class="full-width has-padding has-border" type="text" placeholder="用户名支持3-11位数字-字母-汉字，必须以字母或汉字开头" id="r_username" minlength="3" maxlength="11">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg femail"></label>
+                        <input required name="useremail" class="full-width has-padding has-border" type="email" placeholder="输入mail" id="r_email">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="userpwd" class="full-width has-padding has-border" type="password"  placeholder="密码支持6-22位数字-字母-字符" id="r_userpwd" minlength="6" maxlength="22">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="userpwd1" class="full-width has-padding has-border" type="password"  placeholder="确认密码" id="r_userpwd1" minlength="6" maxlength="22">
+                    </p>
+                    <p class="form_item">
+                        <label class="backimg fpwd"></label>
+                        <input required name="userverify" class="verify-width has-padding has-border" type="text"  placeholder="输入验证码" id="r_verify" maxlength="5"><img src="{:U('Public/verify')}" alt="验证码" title="点击刷新" onClick="this.src=this.src+'?'+Math.random()">
+                    </p>
+                    <p class="form_item">
+                        <input class="sumit_menu" type="submit" value="注册新用户" id="submit_regist">
+                    </p>
+                </div>
+            </div>
+            <a href="#0" class="cd-close-form">关闭</a>
+        </div>
+</div>
+<script type="text/javascript" src="js/uoload.js"></script>
+<!-- <form action="{:U('Public/upload')}" method="post" enctype="multipart/form-data"> -->
+<div class="maincontainer">    <div class="container">
+          <div class="imageBox"><p>X</p><div class="thumbBox"></div></div>
+            <div class="action"> 
+                <div class="new-contentarea tc"> 
+                    <a href="javascript:void(0)" class="upload-img">
+                        <label for="upload-file">上传图像</label>
+                    </a>
+                    <input type="file" class="" name="upload-file" id="upload-file" />
+                </div>
+                <input type="submit" id="btnsubmit"  class="Btnsty_peyton" value="上传">
+                <input type="button" id="btnCrop"  class="Btnsty_peyton" value="裁切">
+                <input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+"  >
+                <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" >
+            </div>
+          </div>
+    </div>
+</div>
+<!-- </form> -->
+    <div style="display:none;" class="my_audio">
+        <audio controls="controls" id='piano_1'>
+            <source src="media/1.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_2'>
+            <source src="media/2.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_3'>
+            <source src="media/3.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_4'>
+            <source src="media/4.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_5'>
+            <source src="media/5.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_6'>
+            <source src="media/6.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_7'>
+            <source src="media/7.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_8'>
+            <source src="media/8.ogg" type="audio/ogg" />
+        </audio>
+        <audio controls="controls" id='piano_9'>
+            <source src="media/9.ogg" type="audio/ogg" />
+        </audio>
+    </div>
+</header>
+<script type="text/javascript" src="js/nav.js"></script>
+
+
+<!-- banner部分 -->
+<div class="banner">
+<div class="box">
+  <div class="b b1">
+    <ul class="lst lst1">
+      <li><img src="images/1.jpg" alt="" /></li>
+      <li><img src="images/2.jpg" alt="" /></li>
+      <li><img src="images/3.jpg" alt="" /></li>
+      <li><img src="images/4.jpg" alt="" /></li>
+      <li><img src="images/5.jpg" alt="" /></li>
+    </ul>
+  </div>
+  <div class="b b2">
+    <ul class="lst lst2">
+      <li><img src="images/2.jpg" alt="" /></li>
+      <li><img src="images/3.jpg" alt="" /></li>
+      <li><img src="images/4.jpg" alt="" /></li>
+      <li><img src="images/5.jpg" alt="" /></li>
+      <li><img src="images/1.jpg" alt="" /></li>
+    </ul>
+  </div>
+  <div class="b3">
+    <ul class="lst lst3">
+      <li><img src="images/3.jpg" alt="" /></li>
+      <li><img src="images/4.jpg" alt="" /></li>
+      <li><img src="images/5.jpg" alt="" /></li>
+      <li><img src="images/1.jpg" alt="" /></li>
+      <li><img src="images/2.jpg" alt="" /></li>
+    </ul>
+  </div>
+  <div class="cen">
+    <h3 class="cenTit">每日一语</h3>
+    <p class="wrd">做人如水，水的精神：无论何时何地，总是改变自己的形态不断寻找出路;不拒绝任何加盟的沙石和物障，反而是夹裹前行，壮大自己的力量，勇往直前;任何时候遇到阻挡，总是慢慢蓄积力量，最后加以冲破;历经千里万里千难万险，始终不改变自己的本质。
+  </div>
+  <div class="cen1">个人原创模板分享</div>
+  <span class="arr lef"></span>
+  <span class="arr rig"></span>
+</div></div>
+
+
+
+
+
+<include file = "Public:banner" />
+<article>
+
+<div class="bloglist left">
+<!-- 主题左部分开始 -->
+<div class="gonggao"><div class="gg"></div>
+<p>【公告】许哥个人博客已初步完成，部分功能正在完善，欢迎大家访问！</p></div>
+  <h2 class="title_tj t_back">
+    <p><span>热门推荐</span></p>
+  </h2>
+  <ul>
+    <foreach name= "hotartical" item = "ht">
+      <li><i>{$ht.xg_a_hit}</i><a href="{:U('/artmore/'.$ht['xg_a_id'])}">{$ht.xg_a_title}</a><span>{$ht.xg_a_date}</span></li>
+    </foreach>
+  </ul>
+  <h2 class="title_tj t_top">
+    <p id="page"><span>最新文章</span></p>
+  </h2>
+  <foreach name= "newartical" item = "nw">
+    <div class='articals'>
+        <div class='a_img'>
+            <a href="{:U('/artmore/'.$nw['xg_a_id'])}"><img src='{$nw['xg_a_imgpath']}'><span class="demotest">详细阅读</span></a>
+        </div>
+        <div class='a_content'>
+            <foreach name= "atype" item = "at">
+            <if condition = "$at['xg_t_id'] eq $nw['xg_t_id']">
+            <div class="a_type">{$at.xg_t_type}</div>
+            </if>
+            </foreach>
+            <h1 class='a_title'><a href="{:U('/artmore/'.$nw['xg_a_id'])}">{$nw.xg_a_title}</a></h1>
+            <h2 class='a_stitle'>摘要</h2>
+            <p class='a_description'>{$nw.xg_a_content|strip_tags|msubstr=0,130,'utf-8',true}</p>
+            <div class='a_message'>
+              <span class='a_timestamp'>
+                <i></i>
+                {$nw.xg_a_date}
+              </span>
+              <span>
+                <i></i>
+                <a href='#'>{$nw.xg_a_hit} 访问</a>
+              </span>
+        </div>
+    </div>
+  </div>
+</foreach>
+{$page}
+</div>
+
+  <!-- 主题左部分结束 -->
+  <aside class="right">
+    <!-- 主题右部分 -->
+    <div class="weather"><iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=1"></iframe></div>
+    <div class="right_top">
+      <div class="right_top_title randar">
+        <h4>随机文章</h4><span>换一换</span>
+        <ul class="right_top_ul t_backgrand">
+        <include file = "Public:index"  />
+        </ul>
+      </div>
+    </div>
+       <div class="right_top">
+      <div class="right_top_title r_link">
+        <h4>友情链接</h4><span>　</span>
+        <ul class="right_top_ul">
+          <foreach name="slink" item="sl">
+          <li><i></i><a href="//{$sl['xg_f_url']}">{$sl.xg_f_name}</a></li>
+          </foreach>
+        </ul>
+      </div>
+    </div> 
+     <div class="right_top r_music">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=276 height=110 src="http://music.163.com/outchain/player?type=0&id=416793320&auto=0&height=90" style="margin-left: -10px;"></iframe>
+    </div> 
+    
+    <div class="right_top">
+      <div class="right_top_title r_weibo">
+        <h4>新浪微博</h4><span>　</span>
+        <ul class="right_top_ul">
+          <iframe width="100%" height="385" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=1&isFans=0&uid=5114761777&verifier=e66fa376&dpc=1"></iframe>
+        </ul>
+      </div>
+    </div> 
+  </aside>
+</article>
+<!-- 版权部分 -->
+<footer>
+  <p>许博宇的个人博客<a href="#" target="_blank"> 豫ICP备88888888号</a> <a href="#"> 网站统计</a></p>
+</footer>
+<div class="returntop">
+  <span></span>
+</div>
+</body>
+</html>
